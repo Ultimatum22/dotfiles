@@ -32,9 +32,9 @@ source "$ZDOTDIR/zsh-functions"
 # zsh_add_file "zsh-prompt"
 
 # Plugins
-#zsh_add_plugin "zsh-users/zsh-autosuggestions"
-#zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-#zsh_add_completion "esc/conda-zsh-completion" false
+zsh_add_plugin "zsh-users/zsh-autosuggestions"
+zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
+zsh_add_completion "esc/conda-zsh-completion" false
 
 # Kkey-bindings
 #bindkey -s '^o' ranger^M'
