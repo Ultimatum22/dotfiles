@@ -9,8 +9,9 @@ unsetopt BEEP
 # Completions
 autoload -Uz compinit
 zstyle ':completion:*' menu select
-
+# zstyle ':completion::complete:lsof:*' menu yes select
 zmodload zsh/complist
+compinit
 
 _comp_options+=(globdots) # Include hidden files
 
@@ -26,15 +27,17 @@ autoload -Uz colors && colors
 source "$ZDOTDIR/zsh-functions"
 
 # Normal files to source
-# zsh_add_file "zsh-exports"
-#zsh_add_file "zsh-vim-mode"
-# zsh_add_file "zsh-aliases"
-# zsh_add_file "zsh-prompt"
+zsh_add_file "zsh-exports"
+# zsh_add_file "zsh-vim-mode"
+zsh_add_file "zsh-aliases"
+zsh_add_file "zsh-prompt"
 
 # Plugins
+zsh_add_plugin "zsh-users/zsh-completions"
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
 zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-zsh_add_completion "esc/conda-zsh-completion" false
+zsh_add_completion "esc/conda-zsh-completion" true
+# zsh_add_completion "zsh-users/zsh-completions" true
 
 # Kkey-bindings
 #bindkey -s '^o' ranger^M'
