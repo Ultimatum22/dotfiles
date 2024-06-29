@@ -4,7 +4,7 @@ HISTSIZE=1000000
 SAVEHIST=1000000
 HISTDUP=erase
 
-export MINICONDA=$HOME/miniconda3
+export MINICONDA=$HOME/miniforge3
 
 export PATH="$HOME/.local/bin":$PATH
 export MANPAGER='nvim +Man!'
