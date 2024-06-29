@@ -36,5 +36,3 @@ alias archlinx-fix-keys="sudo pacman-key --init && sudo pacman-key --populate ar
 
 # systemd
 alias list_systemctl="systemctl list-unit-files --state=enabled"
-
-eval "$(/home/dave/miniconda3/bin/conda shell.zsh hook)" 
