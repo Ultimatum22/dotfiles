@@ -50,3 +50,8 @@
 	whitespace = red reverse
 
 # vi: ft=gitconfig
+[init]
+	defaultBranch = master
+[user]
+	name = Dave Nieuwenhuijzen
+	email = 4242374+Ultimatum22@users.noreply.github.com

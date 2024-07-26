@@ -51,3 +51,6 @@ export TASKRC="${XDG_CONFIG_HOME}/task/taskrc"
 export PERL_CPANM_HOME="${XDG_CACHE_HOME}/cpanm"
 export SOLARGRAPH_CACHE="${XDG_CACHE_HOME}/solargraph"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
+
+export FLUTTER="$HOME/development/flutter"
+export ANDROID_PLATFORM_TOOLS="$HOME/development/android/sdk/platform-tools"
