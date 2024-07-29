@@ -138,64 +138,6 @@ if (( ${+commands[nvim]} )); then
     print "  ...done"
 fi
 
-# Link goenv plugins to $GOENV_ROOT
-print "Linking goenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/goenv/goenv/plugins/go-build" "${XDG_DATA_HOME}/goenv/plugins/go-build"
-print "  ...done"
-
-# Link jenv plugins to $JENV_ROOT
-print "Linking jenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/jenv/jenv/available-plugins/export" "${XDG_DATA_HOME}/jenv/plugins/export"
-print "  ...done"
-
-# Link luaenv plugins to $LUAENV_ROOT
-print "Linking luaenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/luaenv/lua-build" "${XDG_DATA_HOME}/luaenv/plugins/lua-build"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/luaenv/luaenv-luarocks" "${XDG_DATA_HOME}/luaenv/plugins/luaenv-luarocks"
-print "  ...done"
-
-# Link nodenv plugins to $NODENV_ROOT
-print "Linking nodenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/nodenv/node-build" "${XDG_DATA_HOME}/nodenv/plugins/node-build"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/nodenv/nodenv-aliases" "${XDG_DATA_HOME}/nodenv/plugins/nodenv-aliases"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/nodenv/nodenv-env" "${XDG_DATA_HOME}/nodenv/plugins/nodenv-env"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/nodenv/nodenv-man" "${XDG_DATA_HOME}/nodenv/plugins/nodenv-man"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/nodenv/nodenv-package-rehash" "${XDG_DATA_HOME}/nodenv/plugins/nodenv-package-rehash"
-print "  ...done"
-
-# Link phpenv plugins to $PHPENV_ROOT
-print "Linking phpenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/phpenv/php-build" "${XDG_DATA_HOME}/phpenv/plugins/php-build"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/phpenv/phpenv-aliases" "${XDG_DATA_HOME}/phpenv/plugins/phpenv-aliases"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/phpenv/phpenv-composer" "${XDG_DATA_HOME}/phpenv/plugins/phpenv-composer"
-print "  ...done"
-
-# Link plenv plugins to $PLENV_ROOT
-print "Linking plenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/plenv/perl-build" "${XDG_DATA_HOME}/plenv/plugins/perl-build"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/plenv/plenv-contrib" "${XDG_DATA_HOME}/plenv/plugins/plenv-contrib"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/plenv/plenv-download" "${XDG_DATA_HOME}/plenv/plugins/plenv-download"
-print "  ...done"
-
-# Link pyenv plugins to $PYENV_ROOT
-print "Linking pyenv plugins..."
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/pyenv/pyenv/plugins/python-build" "${XDG_DATA_HOME}/pyenv/plugins/python-build"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/pyenv/pyenv-virtualenv" "${XDG_DATA_HOME}/pyenv/plugins/pyenv-virtualenv"
-zf_ln -snf "${SCRIPT_DIR}/env-wrappers/pyenv/pyenv-default-packages" "${XDG_DATA_HOME}/pyenv/plugins/pyenv-default-packages"
-zf_ln -sf "${SCRIPT_DIR}/env-wrappers/pyenv/default-packages" "${XDG_DATA_HOME}/pyenv/default-packages"
-print "  ...done"
-
-# Link rbenv plugins to $RBENV_ROOT
-print "Linking rbenv plugins..."
-local -a rbenv_plugins
-rbenv_plugins=("ruby-build" "rbenv-aliases" "rbenv-binstubs" "rbenv-chefdk" "rbenv-ctags" "rbenv-default-gems" "rbenv-env" "rbenv-man")
-local plugin
-for plugin in "${rbenv_plugins[@]}"; do
-    zf_ln -snf "${SCRIPT_DIR}/env-wrappers/rbenv/${plugin}" "${XDG_DATA_HOME}/rbenv/plugins/${plugin}"
-done
-ln -sf "${SCRIPT_DIR}/env-wrappers/rbenv/default-gems" "${XDG_DATA_HOME}/rbenv/default-gems"
-print "  ...done"
-
 # Trigger zsh run with powerlevel10k prompt to download gitstatusd
 print "Downloading gitstatusd for powerlevel10k..."
 ${SHELL} -is <<<'' &> /dev/null
