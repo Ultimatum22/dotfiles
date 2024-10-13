@@ -24,4 +24,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # Add go binaries to paths
-path=(${GOPATH}/bin ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${path})
+path=(${GOROOT}/bin ${GOPATH} ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${path})
