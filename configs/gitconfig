@@ -53,5 +53,9 @@
 [init]
 	defaultBranch = master
 [user]
-	name = Dave Nieuwenhuijzen
+	name = Dave N
 	email = 4242374+Ultimatum22@users.noreply.github.com
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
