@@ -55,3 +55,4 @@ export GTK2_RC_FILES="${XDG_CONFIG_HOME}/gtk-2.0/gtkrc"
 
 export FLUTTER="$HOME/development/flutter"
 export ANDROID_PLATFORM_TOOLS="$HOME/development/android/sdk/platform-tools"
+export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
