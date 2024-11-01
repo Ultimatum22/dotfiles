@@ -30,4 +30,4 @@ source /usr/share/nvm/install-nvm-exec
 
 
 # Add go binaries to paths
-path=(${GOROOT}/bin ${GOPATH} ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${MAVEN}/bin ${path})
+path=(${GOROOT}/bin ${GOPATH}/bin ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${MAVEN}/bin ${path})
