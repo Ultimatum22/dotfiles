@@ -17,7 +17,7 @@ else
     if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
         . "/$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/miniconda3/bin:$PATH"
+        export PATH="/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -28,6 +28,8 @@ source /usr/share/nvm/nvm.sh
 source /usr/share/nvm/bash_completion
 source /usr/share/nvm/install-nvm-exec
 
+# SDK
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Add go binaries to paths
 path=(${GOROOT}/bin ${GOPATH}/bin ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${MAVEN}/bin ${path})
