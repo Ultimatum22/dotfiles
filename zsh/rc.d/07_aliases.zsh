@@ -45,3 +45,6 @@ alias exit=" exit"
 (( ${+commands[fd]} )) && alias fd="noglob fd"
 (( ${+commands[man]} )) && alias man="nocorrect wrap-man"
 (( ${+commands[sudo]} )) && alias sudo="noglob wrap-sudo " # trailing space is needed to enable alias expansion
+
+
+(( ${+commands[feh]} )) && alias fehrandom='feh -zZFqxrY.D 10 -B Black'
