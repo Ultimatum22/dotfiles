@@ -1,0 +1,83 @@
+[theme]
+theme = "nord-snow-storm"
+[icons]
+icons = "awesome5"
+
+[[block]]
+block = "sound"
+driver = "pulseaudio"
+format = " $icon {$volume.eng(w:2) |}"
+[block.theme_overrides]
+idle_bg = "#D8DEE9"
+idle_fg = "#A0A6B2"
+
+[[block]]
+block = "net"
+format = " $icon $signal_strength $ip $ssid "
+[block.theme_overrides]
+idle_bg = "#A0A6B2"
+idle_fg = "#D8DEE9"
+
+[[block]]
+block = "memory"
+format = " $icon $mem_used_percents.eng(w:1) "
+format_alt = " $icon_swap $swap_free.eng(w:3,u:B,p:Mi)/$swap_total.eng(w:3,u:B,p:Mi)($swap_used_percents.eng(w:2)) "
+interval = 30
+warning_mem = 70
+critical_mem = 90
+[block.theme_overrides]
+idle_bg = "#A0A6B2"
+idle_fg = "#D8DEE9"
+
+[[block]]
+block = "cpu"
+#info_cpu = 30
+#warning_cpu = 60
+#critical_cpu = 90
+interval = 1
+#format = " $icon $barchart $utilization "
+#format_alt = " $icon $frequency{ $boost|} "
+[block.theme_overrides]
+idle_bg = "#D8DEE9"
+idle_fg = "#A0A6B2"
+
+[[block]]
+block = "load"
+format = " $icon 15min avg: $15m.eng(w:4) "
+interval = 15
+[block.theme_overrides]
+idle_bg = "#A0A6B2"
+idle_fg = "#D8DEE9"
+
+[[block]]
+block = "disk_space"
+info_type = "free"
+alert_unit = "GB"
+alert = 10.0
+warning = 15.0
+format = " $icon $percentage "
+format_alt = " $icon $available / $total "
+[[block.click]]
+button = "right"
+update = true
+[block.theme_overrides]
+idle_bg = "#D8DEE9"
+idle_fg = "#A0A6B2"
+
+[[block]]
+block = "battery"
+if_command = "test -e /sys/class/power_supply/BAT0"
+[block.theme_overrides]
+idle_bg = "#D8DEE9"
+idle_fg = "#A0A6B2"
+
+[[block]]
+block = "time"
+interval = 60
+timezone = "Europe/Amsterdam"
+[block.format]
+full = " $icon $timestamp.datetime(f:'%a %d-%m-%Y %R %:z') "
+short = " $icon $timestamp.datetime(f:%R) "
+[block.theme_overrides]
+idle_bg = "#A0A6B2"
+idle_fg = "#D8DEE9"
