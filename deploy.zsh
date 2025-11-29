@@ -48,6 +48,8 @@ zf_ln -sf "${SCRIPT_DIR}/configs/htoprc" "${XDG_CONFIG_HOME}/htop/htoprc"
 zf_ln -sf "${SCRIPT_DIR}/configs/ranger" "${XDG_CONFIG_HOME}/ranger/rc.conf"
 zf_ln -sf "${SCRIPT_DIR}/configs/gemrc" "${XDG_CONFIG_HOME}/gem/gemrc"
 zf_ln -snf "${SCRIPT_DIR}/configs/ranger-plugins" "${XDG_CONFIG_HOME}/ranger/plugins"
+zf_ln -sf "${SCRIPT_DIR}/configs/i3" "${XDG_CONFIG_HOME}/i3"
+zf_ln -sf "${SCRIPT_DIR}/configs/i3status-rust" "${XDG_CONFIG_HOME}/i3status-rust"
 print "  ...done"
 
 # Make sure submodules are installed
