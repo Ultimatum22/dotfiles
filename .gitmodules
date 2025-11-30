@@ -477,3 +477,6 @@
 [submodule "zsh/plugins/z"]
 	path = zsh/plugins/z
 	url = https://github.com/agkozak/zsh-z.git
+[submodule "themes/rofi-themes-collection"]
+	path = themes/rofi-themes-collection
+	url = https://github.com/lr-tech/rofi-themes-collection.git
