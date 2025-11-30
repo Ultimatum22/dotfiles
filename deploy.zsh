@@ -51,7 +51,6 @@ zf_ln -snf "${SCRIPT_DIR}/configs/ranger-plugins" "${XDG_CONFIG_HOME}/ranger/plu
 zf_ln -sf "${SCRIPT_DIR}/configs/i3" "${XDG_CONFIG_HOME}/i3"
 zf_ln -sf "${SCRIPT_DIR}/configs/i3status-rust" "${XDG_CONFIG_HOME}/i3status-rust"
 zf_ln -sf "${SCRIPT_DIR}/configs/alacritty" "${XDG_CONFIG_HOME}/alacritty"
-zf_ln -sf "${SCRIPT_DIR}/configs/rofi" "${XDG_CONFIG_HOME}/rofi/config.rasi"
 print "  ...done"
 
 # Make sure submodules are installed
