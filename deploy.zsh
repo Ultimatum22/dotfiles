@@ -17,12 +17,15 @@ XDG_STATE_HOME="${HOME}/.local/state"
 # Create required directories
 print "Creating required directory tree..."
 zf_mkdir -p "${XDG_CONFIG_HOME}"/{git/local,mc,htop,ranger,gem,tig,gnupg,nvim}
-zf_mkdir -p "${XDG_CACHE_HOME}"/{vim/{backup,swap,undo},zsh,tig}
-zf_mkdir -p "${XDG_DATA_HOME}"/{{goenv,jenv,luaenv,nodenv,phpenv,plenv,pyenv,rbenv}/plugins,zsh,man/man1,vim/spell,nvim/site/pack/plugins}
+zf_mkdir -p "${XDG_CACHE_HOME}"/{zsh,tig}
+zf_mkdir -p "${XDG_DATA_HOME}"/{{goenv,jenv,luaenv,phpenv,plenv,pyenv,rbenv}/plugins,zsh,man/man1,nvim/site/pack/plugins}
 zf_mkdir -p "${XDG_STATE_HOME}"
 zf_mkdir -p "${HOME}"/.local/{bin,etc}
 zf_chmod 700 "${XDG_CONFIG_HOME}/gnupg"
 print "  ...done"
+
+local in_git_repo=0
+git rev-parse --git-dir &>/dev/null && in_git_repo=1
 
 # Link zshenv if needed
 print "Checking for ZDOTDIR env variable..."
@@ -35,7 +38,6 @@ fi
 
 # Link config files
 print "Linking config files..."
-zf_ln -sfn "${SCRIPT_DIR}/vim" "${XDG_CONFIG_HOME}/vim"
 zf_ln -sf "${SCRIPT_DIR}/nvim/init.lua" "${XDG_CONFIG_HOME}/nvim/init.lua"
 zf_ln -sfn "${SCRIPT_DIR}/nvim/after" "${XDG_CONFIG_HOME}/nvim/after"
 zf_ln -sfn "${SCRIPT_DIR}/nvim/lua" "${XDG_CONFIG_HOME}/nvim/lua"
@@ -54,11 +56,13 @@ zf_ln -sf "${SCRIPT_DIR}/configs/alacritty" "${XDG_CONFIG_HOME}/alacritty"
 print "  ...done"
 
 # Make sure submodules are installed
-print "Syncing submodules..."
-git submodule sync > /dev/null
-git submodule update --init --recursive > /dev/null
-git clean -ffd
-print "  ...done"
+if (( in_git_repo )); then
+    print "Syncing submodules..."
+    git submodule sync > /dev/null
+    git submodule update --init --recursive > /dev/null
+    git clean -ffd
+    print "  ...done"
+fi
 
 print "Compiling zsh plugins..."
 {
@@ -72,11 +76,13 @@ print "Compiling zsh plugins..."
 print "  ...done"
 
 # Install hook to call deploy script after successful pull
-print "Installing git hooks..."
-zf_mkdir -p .git/hooks
-zf_ln -sf ../../deploy.zsh .git/hooks/post-merge
-zf_ln -sf ../../deploy.zsh .git/hooks/post-checkout
-print "  ...done"
+if (( in_git_repo )); then
+    print "Installing git hooks..."
+    zf_mkdir -p .git/hooks
+    zf_ln -sf ../../deploy.zsh .git/hooks/post-merge
+    zf_ln -sf ../../deploy.zsh .git/hooks/post-checkout
+    print "  ...done"
+fi
 
 if (( ${+commands[make]} )); then
     # Make install git-extras
@@ -119,44 +125,41 @@ if (( ${+commands[perl]} )); then
     print "  ...done"
 fi
 
-if (( ${+commands[vim]} )); then
-    # Generate vim help tags
-    print "Generating vim helptags..."
-    command vim --not-a-term -c "helptags ALL" -c "qall" &> /dev/null
-    print "  ...done"
-fi
-
 if (( ${+commands[nvim]} )); then
     # Generate nvim help tags
     print "Generating nvim helptags..."
     command nvim --headless -c "helptags ALL" -c "qall" &> /dev/null
     print "  ...done"
-    # Update treesitter config
-    print "Updating treesitter config..."
-    command nvim --headless -c "TSUpdate" -c "qall" &> /dev/null
-    print "  ...done"
-    # Update mason registries
-    print "Updating mason registries..."
-    command nvim --headless -c "MasonUpdate" -c "qall" &> /dev/null
-    print "  ...done"
+    if (( in_git_repo )); then
+        # Update treesitter config
+        print "Updating treesitter config..."
+        command nvim --headless -c "TSUpdate" -c "qall" &> /dev/null
+        print "  ...done"
+        # Update mason registries
+        print "Updating mason registries..."
+        command nvim --headless -c "MasonUpdate" -c "qall" &> /dev/null
+        print "  ...done"
+    fi
 fi
 
-# Trigger zsh run with powerlevel10k prompt to download gitstatusd
-print "Downloading gitstatusd for powerlevel10k..."
-${SHELL} -is <<<'' &> /dev/null
-print "  ...done"
-
-# Download/refresh TLDR pages
-print "Downloading TLDR pages..."
-${SCRIPT_DIR}/tools/tldr-bash-client/tldr -u > /dev/null
-print "  ...done"
-
-# Install crontab task to pull updates every midnight
-print "Installing cron job for periodic updates..."
-local cron_task="cd ${SCRIPT_DIR} && git -c user.name=cron.update -c user.email=cron@localhost stash && git pull && git stash pop"
-local cron_schedule="0 0 * * * ${cron_task}"
-if cat <(grep --ignore-case --invert-match --fixed-strings "${cron_task}" <(crontab -l)) <(echo "${cron_schedule}") | crontab -; then
+if (( in_git_repo )); then
+    # Trigger zsh run with powerlevel10k prompt to download gitstatusd
+    print "Downloading gitstatusd for powerlevel10k..."
+    ${SHELL} -is <<<'' &> /dev/null
     print "  ...done"
-else
-    print "Please add \`cd ${SCRIPT_DIR} && git pull\` to your crontab or just ignore this, you can always update dotfiles manually"
+
+    # Download/refresh TLDR pages
+    print "Downloading TLDR pages..."
+    ${SCRIPT_DIR}/tools/tldr-bash-client/tldr -u > /dev/null || print "  ...failed, skipping"
+    print "  ...done"
+
+    # Install crontab task to pull updates every midnight
+    print "Installing cron job for periodic updates..."
+    local cron_task="cd ${SCRIPT_DIR} && git -c user.name=cron.update -c user.email=cron@localhost stash && git pull && git stash pop"
+    local cron_schedule="0 0 * * * ${cron_task}"
+    if cat <(grep --ignore-case --invert-match --fixed-strings "${cron_task}" <(crontab -l)) <(echo "${cron_schedule}") | crontab -; then
+        print "  ...done"
+    else
+        print "Please add \`cd ${SCRIPT_DIR} && git pull\` to your crontab or just ignore this, you can always update dotfiles manually"
+    fi
 fi

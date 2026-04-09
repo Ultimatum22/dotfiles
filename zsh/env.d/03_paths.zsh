@@ -8,25 +8,25 @@ path=(/usr/local/bin /usr/local/sbin ${path})
 path=(${HOME}/.local/bin ${path})
 MANPATH="${XDG_DATA_HOME}/man:${MANPATH}"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/$HOME/miniconda3/etc/profile.d/conda.sh"
+# Conda — lazy init on first call
+conda() {
+    unset -f conda
+    local _conda_setup
+    _conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$_conda_setup"
+    elif [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+    conda "$@"
+}
 
 # NVM
-source /usr/share/nvm/nvm.sh
-source /usr/share/nvm/bash_completion
-source /usr/share/nvm/install-nvm-exec
+[[ -f /usr/share/nvm/nvm.sh ]] && source /usr/share/nvm/nvm.sh
+[[ -f /usr/share/nvm/bash_completion ]] && source /usr/share/nvm/bash_completion
+[[ -f /usr/share/nvm/install-nvm-exec ]] && source /usr/share/nvm/install-nvm-exec
 
 # SDK
 source "$HOME/.sdkman/bin/sdkman-init.sh"
