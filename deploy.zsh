@@ -2,7 +2,14 @@
 
 set -e
 
-zmodload -m -F zsh/files b:zf_\*
+if ! zmodload -m -F zsh/files b:zf_\* 2>/dev/null; then
+    zf_mkdir()  { mkdir  "$@"; }
+    zf_ln()     { ln     "$@"; }
+    zf_chmod()  { chmod  "$@"; }
+    zf_rm()     { rm     "$@"; }
+    zf_mv()     { mv     "$@"; }
+    zf_rmdir()  { rmdir  "$@"; }
+fi
 
 # Get the current path
 SCRIPT_DIR="${0:A:h}"
