@@ -229,3 +229,5 @@ default_floating_border pixel 1
 for_window [class="^.*"] border pixel 2
 gaps inner 2
 gaps outer 2
+
+for_window [class="Wfica"] floating enable, move position 0 0, resize set 3840 1080
