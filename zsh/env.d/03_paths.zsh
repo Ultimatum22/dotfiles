@@ -28,8 +28,12 @@ conda() {
 [[ -f /usr/share/nvm/bash_completion ]] && source /usr/share/nvm/bash_completion
 [[ -f /usr/share/nvm/install-nvm-exec ]] && source /usr/share/nvm/install-nvm-exec
 
-# SDK
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+# SDK — lazy init on first call
+sdk() {
+    unset -f sdk
+    [[ -f "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk "$@"
+}
 
 # Add go binaries to paths
 path=(${GOROOT}/bin ${GOPATH}/bin ${FLUTTER}/bin ${ANDROID_PLATFORM_TOOLS} ${MAVEN}/bin ${path})

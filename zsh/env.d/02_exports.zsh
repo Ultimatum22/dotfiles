@@ -7,7 +7,7 @@ export GPG_TTY=${TTY}
 
 # XDG basedir spec compliance
 if [[ ! -v XDG_CONFIG_HOME ]]; then
-    export XDG_CONFIG_HOME"=${HOME}/.config"
+    export XDG_CONFIG_HOME="${HOME}/.config"
 fi
 if [[ ! -v XDG_CACHE_HOME ]]; then
     export XDG_CACHE_HOME="${HOME}/.cache"
