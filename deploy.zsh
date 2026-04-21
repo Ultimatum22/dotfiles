@@ -25,7 +25,7 @@ XDG_STATE_HOME="${HOME}/.local/state"
 print "Creating required directory tree..."
 zf_mkdir -p "${XDG_CONFIG_HOME}"/{git/local,mc,htop,ranger,gem,tig,gnupg,nvim}
 zf_mkdir -p "${XDG_CACHE_HOME}"/{zsh,tig}
-zf_mkdir -p "${XDG_DATA_HOME}"/{{goenv,jenv,luaenv,phpenv,plenv,pyenv,rbenv}/plugins,zsh,man/man1,nvim/site/pack/plugins}
+zf_mkdir -p "${XDG_DATA_HOME}"/{{goenv,jenv,luaenv,phpenv,plenv,pyenv,rbenv}/plugins,zsh,man/man1}
 zf_mkdir -p "${XDG_STATE_HOME}"
 zf_mkdir -p "${HOME}"/.local/{bin,etc}
 zf_chmod 700 "${XDG_CONFIG_HOME}/gnupg"
@@ -48,7 +48,6 @@ print "Linking config files..."
 zf_ln -sf "${SCRIPT_DIR}/nvim/init.lua" "${XDG_CONFIG_HOME}/nvim/init.lua"
 zf_ln -sfn "${SCRIPT_DIR}/nvim/after" "${XDG_CONFIG_HOME}/nvim/after"
 zf_ln -sfn "${SCRIPT_DIR}/nvim/lua" "${XDG_CONFIG_HOME}/nvim/lua"
-zf_ln -sfn "${SCRIPT_DIR}/nvim/plugins" "${XDG_DATA_HOME}/nvim/site/pack/plugins/start"
 zf_ln -sf "${SCRIPT_DIR}/configs/gitconfig" "${XDG_CONFIG_HOME}/git/config"
 zf_ln -sf "${SCRIPT_DIR}/configs/gitattributes" "${XDG_CONFIG_HOME}/git/attributes"
 zf_ln -sf "${SCRIPT_DIR}/configs/gitignore" "${XDG_CONFIG_HOME}/git/ignore"
@@ -133,20 +132,14 @@ if (( ${+commands[perl]} )); then
 fi
 
 if (( ${+commands[nvim]} )); then
-    # Generate nvim help tags
-    print "Generating nvim helptags..."
-    command nvim --headless -c "helptags ALL" -c "qall" &> /dev/null
-    print "  ...done"
     if (( in_git_repo )); then
-        # Update treesitter config
-        print "Updating treesitter config..."
-        command nvim --headless -c "TSUpdate" -c "qall" &> /dev/null
-        print "  ...done"
-        # Update mason registries
-        print "Updating mason registries..."
-        command nvim --headless -c "MasonUpdate" -c "qall" &> /dev/null
+        print "Installing/updating nvim plugins..."
+        command nvim --headless '+Lazy! sync' +qa &> /dev/null
         print "  ...done"
     fi
+    print "Updating mason registries..."
+    command nvim --headless -c "MasonUpdate" -c "qall" &> /dev/null
+    print "  ...done"
 fi
 
 if (( in_git_repo )); then

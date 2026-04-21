@@ -1,12 +1,21 @@
 vim.loader.enable()
 
 require('options')
-require('colorscheme')
 require('keymaps')
-require('whichkey')
-require('treesitter')
-require('plugins')
-require('committia')
-require('tree')
-require('statusbar')
-require('lsp')
+
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local out = vim.fn.system({
+        "git", "clone", "--filter=blob:none", "--branch=stable",
+        "https://github.com/folke/lazy.nvim.git", lazypath,
+    })
+    if vim.v.shell_error ~= 0 then
+        error("Failed to clone lazy.nvim:\n" .. out)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup(require('lazy_plugins'), {
+    change_detection = { notify = false },
+})
