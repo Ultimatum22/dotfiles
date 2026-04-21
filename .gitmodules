@@ -100,9 +100,6 @@
 [submodule "tools/testssl.sh"]
 	path = tools/testssl.sh
 	url = https://github.com/drwetter/testssl.sh.git
-[submodule "tools/tldr-bash-client"]
-	path = tools/tldr-bash-client
-	url = https://github.com/pepa65/tldr-bash-client.git
 [submodule "tools/zsh-bin"]
 	path = tools/zsh-bin
 	url = https://github.com/romkatv/zsh-bin.git

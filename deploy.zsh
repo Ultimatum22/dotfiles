@@ -150,8 +150,12 @@ if (( in_git_repo )); then
 
     # Download/refresh TLDR pages
     print "Downloading TLDR pages..."
-    ${SCRIPT_DIR}/tools/tldr-bash-client/tldr -u > /dev/null || print "  ...failed, skipping"
-    print "  ...done"
+    if (( ${+commands[tldr]} )); then
+        tldr --update > /dev/null || print "  ...failed, skipping"
+        print "  ...done"
+    else
+        print "  ...tealdeer not installed, skipping (install with: pacman -S tealdeer)"
+    fi
 
     # Install crontab task to pull updates every midnight
     print "Installing cron job for periodic updates..."
